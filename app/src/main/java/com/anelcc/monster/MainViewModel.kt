@@ -35,7 +35,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         val monsterData = adapter.fromJson(text)
 
         for (monster in monsterData ?: emptyList()) {
-            Log.i(LOG_TAG,"parseText: ${monster.monsterName} (\$${monster.price})")
+            Log.i(LOG_TAG,"parseText: ${monster.name} (\$${monster.price})")
         }
     }
 }
