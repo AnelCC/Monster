@@ -10,7 +10,6 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
-
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private val listType = Types.newParameterizedType(
@@ -20,7 +19,6 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     init {
         val resourcesText = FileHelper.getTextFromResources(app, R.raw.monster_data)
         Log.i(LOG_TAG, "Resources: $resourcesText")
-
 
         val assetsText = FileHelper.getTextFromAssets(app, "monster_data.json")
         Log.i(LOG_TAG, "Assets: $assetsText")
