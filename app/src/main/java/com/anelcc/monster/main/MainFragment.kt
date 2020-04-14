@@ -26,8 +26,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        val monster = Monster("Bob", "myfile", "a caption",
-            "a description", .19, 3)
+        val monster = Monster("Bob", "myfile", "a caption", "a description", .19, 3)
         Log.i("monsterLogging", monster.toString())
 
         return inflater.inflate(R.layout.fragment_main, container, false)
