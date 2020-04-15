@@ -1,8 +1,6 @@
 package com.anelcc.monster.data
 
 import android.content.Context
-import android.util.Log
-import com.anelcc.monster.LOG_TAG
 import com.anelcc.monster.utilities.FileHelper
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
