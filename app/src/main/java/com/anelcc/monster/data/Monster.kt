@@ -1,9 +1,9 @@
 package com.anelcc.monster.data
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class Monster (
-    @Json(name = "monsterName")
+    @SerializedName("monsterName")
     val name: String,
     val imageFile: String,
     val caption: String,
