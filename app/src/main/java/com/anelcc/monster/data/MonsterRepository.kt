@@ -4,35 +4,52 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.util.Log
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.MutableLiveData
 import com.anelcc.monster.LOG_TAG
-import com.anelcc.monster.utilities.FileHelper
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
+import com.anelcc.monster.WEB_SERVICE_URL
+import com.google.gson.GsonBuilder
 import com.squareup.moshi.Types
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
-//I want an application reference.
 class MonsterRepository(val app: Application) {
 
     //instance of the class MutableLiveData
     val monsterData = MutableLiveData<List<Monster>>()
-
     private val listType = Types.newParameterizedType(
         List::class.java, Monster::class.java
     )
 
     init {
-        getMonsterData()
-        Log.i(LOG_TAG, "Anel Network available: ${networkAvailable()}")
-
+        //Co-routine scope pass in a dispatcher.
+        // There are a number of different dispatchers available in the co-routines library,
+        // but for Android you can typically choose between two.
+        // Dispatchers.io means do this on the background thread,
+        // while dispatchers.main means do it in the foreground thread.
+        CoroutineScope(Dispatchers.IO).launch {
+            callWebService()
+        }
     }
 
-    fun getMonsterData() {
-        val assetsText = FileHelper.getTextFromAssets(app, "monster_data.json" )
-        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-        val adapter: JsonAdapter<List<Monster>> = moshi.adapter(listType)
-        monsterData.value = adapter.fromJson(assetsText) ?: emptyList()
+    /**
+     * WorkerThreat annotation. Is an indicator that this function will be called in a background threat.
+     */
+    @WorkerThread
+    suspend fun callWebService() {
+        if (networkAvailable()) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(WEB_SERVICE_URL)
+                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+                .build()
+            val service = retrofit.create(MonsterService::class.java)
+            val serviceData = service.getMonsterData().body() ?: emptyList()
+            monsterData.postValue(serviceData)
+        }
     }
 
     @Suppress("DEPRECATION")

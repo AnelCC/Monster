@@ -9,6 +9,6 @@ interface MonsterService {
     // Coroutines can run either on the UI thread or in a background thread,
     // but for a function to be part of a coroutine call,
     // it must have the suspend keyword at the beginning of the function declaration.
-    @GET("/feed/monster_data.json")
+    @GET("feed/monster_data.json")
     suspend fun getMonsterData(): Response<List<Monster>>
 }

@@ -50,8 +50,10 @@ dependencies {
 
     //add the retrofit2 dependencies
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.6.0'
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
     // This container view models and data
+
     implementation 'com.squareup.moshi:moshi-kotlin:1.9.2'
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.9.2'
 
