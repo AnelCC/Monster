@@ -19,26 +19,14 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class MonsterRepository(val app: Application) {
 
-    //instance of the class MutableLiveData
     val monsterData = MutableLiveData<List<Monster>>()
-    private val listType = Types.newParameterizedType(
-        List::class.java, Monster::class.java
-    )
 
     init {
-        //Co-routine scope pass in a dispatcher.
-        // There are a number of different dispatchers available in the co-routines library,
-        // but for Android you can typically choose between two.
-        // Dispatchers.io means do this on the background thread,
-        // while dispatchers.main means do it in the foreground thread.
         CoroutineScope(Dispatchers.IO).launch {
             callWebService()
         }
     }
 
-    /**
-     * WorkerThreat annotation. Is an indicator that this function will be called in a background threat.
-     */
     @WorkerThread
     suspend fun callWebService() {
         if (networkAvailable()) {
