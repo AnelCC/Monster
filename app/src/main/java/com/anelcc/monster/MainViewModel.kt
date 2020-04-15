@@ -1,16 +1,16 @@
 package com.anelcc.monster
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.anelcc.monster.data.MonsterRepository
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
-    init {
-        val monsterData = MonsterRepository().getMonsterData(app)
-        for (monster in monsterData ?: emptyList()) {
-            Log.i(LOG_TAG, "parseText: ${monster.name} (\$${monster.price})")
-        }
-    }
+   /*
+   The ViewModel is simply passing that LiveData object back to the user interface.
+   And the fragment, that is the user interface,
+   is only responsible for managing the presentation.
+    */
+   private val dataRepo = MonsterRepository(app)
+    val monsterData = dataRepo.monsterData
 }
