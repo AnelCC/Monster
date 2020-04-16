@@ -28,11 +28,7 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         viewModel.monsterData.observe(this, Observer {
-            val monsterNames = StringBuilder()
-            for (monster in it) {
-                monsterNames.append(monster.name).append("\n")
-            }
-            monster_name.text = monsterNames
+            // Todo: Next Branch
         })
 
         return inflater.inflate(R.layout.fragment_main, container, false)
