@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anelcc.monster.R
 import com.anelcc.monster.data.Monster
+import com.bumptech.glide.Glide
 
 class MainRecyclerAdapter(val context: Context,
                           val monsters: List<Monster>):
@@ -32,6 +33,7 @@ class MainRecyclerAdapter(val context: Context,
                 it.contentDescription = monster.name
             }
             ratingBar?.rating = monster.scariness.toFloat()
+            Glide.with(context).load(monster.thumbnailUrl).into(monsterImage)
         }
     }
 
