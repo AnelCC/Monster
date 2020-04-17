@@ -1,6 +1,7 @@
 package com.anelcc.monster.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +11,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.anelcc.monster.LOG_TAG
 import com.anelcc.monster.MainViewModel
 import com.anelcc.monster.R
+import com.anelcc.monster.data.Monster
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), MainRecyclerAdapter.MonsterItemListener {
     companion object {
         fun newInstance() = MainFragment()
     }
@@ -32,7 +35,7 @@ class MainFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel.monsterData.observe(this, Observer {
-            val adapter = MainRecyclerAdapter(requireContext(), it)
+            val adapter = MainRecyclerAdapter(requireContext(), it, this)
             recyclerView.adapter = adapter
             swipeLayout.isRefreshing = false
         })
@@ -43,5 +46,9 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+    }
+
+    override fun onMonsterItemClick(monster: Monster) {
+        Log.i(LOG_TAG, "Selected monster: ${monster.name}")
     }
 }
