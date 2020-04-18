@@ -1,4 +1,4 @@
-package com.anelcc.monster.main
+package com.anelcc.monster.ui.main
 
 import android.content.Context
 import android.view.LayoutInflater

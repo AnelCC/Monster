@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.anelcc.monster.main.MainFragment"
+        android:name="com.anelcc.monster.ui.main.MainFragment"
         android:label="main_fragment"
         tools:layout="@layout/fragment_main">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.anelcc.monster.DetailFragment"
+        android:name="com.anelcc.monster.ui.detail.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" />
 </navigation>
