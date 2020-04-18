@@ -15,7 +15,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anelcc.monster.LOG_TAG
-import com.anelcc.monster.MainViewModel
+import com.anelcc.monster.ui.share.ShareViewModel
 import com.anelcc.monster.R
 import com.anelcc.monster.data.Monster
 
@@ -24,7 +24,7 @@ class MainFragment : Fragment(), MainRecyclerAdapter.MonsterItemListener {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: ShareViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeLayout: SwipeRefreshLayout
     private lateinit var navController: NavController
@@ -43,7 +43,7 @@ class MainFragment : Fragment(), MainRecyclerAdapter.MonsterItemListener {
             viewModel.refreshData()
         }
 
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity()).get(ShareViewModel::class.java)
         viewModel.monsterData.observe(this, Observer {
             val adapter = MainRecyclerAdapter(requireContext(), it, this)
             recyclerView.adapter = adapter
@@ -55,11 +55,12 @@ class MainFragment : Fragment(), MainRecyclerAdapter.MonsterItemListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ShareViewModel::class.java)
     }
 
     override fun onMonsterItemClick(monster: Monster) {
         Log.i(LOG_TAG, "Selected monster: ${monster.name}")
+        viewModel.selectedMonster.value = monster
         navController.navigate(R.id.action_mainFragment_to_detailFragment)
     }
 }
