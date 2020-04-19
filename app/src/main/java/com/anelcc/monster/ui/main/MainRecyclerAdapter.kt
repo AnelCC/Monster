@@ -1,4 +1,4 @@
-package com.anelcc.monster.main
+package com.anelcc.monster.ui.main
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,9 +12,7 @@ import com.anelcc.monster.R
 import com.anelcc.monster.data.Monster
 import com.bumptech.glide.Glide
 
-class MainRecyclerAdapter(val context: Context,
-                          val monsters: List<Monster>):
-    RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>()
+class MainRecyclerAdapter(val context: Context, val monsters: List<Monster>, val itemListener: MonsterItemListener): RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>()
 
 {
     override fun getItemCount() = monsters.size
@@ -34,6 +32,9 @@ class MainRecyclerAdapter(val context: Context,
             }
             ratingBar?.rating = monster.scariness.toFloat()
             Glide.with(context).load(monster.thumbnailUrl).into(monsterImage)
+            holder.itemView.setOnClickListener{
+                itemListener.onMonsterItemClick(monster)
+            }
         }
     }
 
@@ -42,5 +43,9 @@ class MainRecyclerAdapter(val context: Context,
         val nameText = itemView.findViewById<TextView>(R.id.nameText)
         val monsterImage = itemView.findViewById<ImageView>(R.id.monsterImage)
         val ratingBar = itemView.findViewById<RatingBar>(R.id.ratingBar)
+    }
+
+    interface MonsterItemListener {
+        fun onMonsterItemClick(monster: Monster)
     }
 }
