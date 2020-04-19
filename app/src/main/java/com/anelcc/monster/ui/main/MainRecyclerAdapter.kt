@@ -12,9 +12,11 @@ import com.anelcc.monster.R
 import com.anelcc.monster.data.Monster
 import com.bumptech.glide.Glide
 
-class MainRecyclerAdapter(val context: Context, val monsters: List<Monster>, val itemListener: MonsterItemListener): RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>()
-
-{
+class MainRecyclerAdapter(
+    val context: Context,
+    val monsters: List<Monster>,
+    val itemListener: MonsterItemListener
+) : RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>() {
     override fun getItemCount() = monsters.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,7 +34,7 @@ class MainRecyclerAdapter(val context: Context, val monsters: List<Monster>, val
             }
             ratingBar?.rating = monster.scariness.toFloat()
             Glide.with(context).load(monster.thumbnailUrl).into(monsterImage)
-            holder.itemView.setOnClickListener{
+            holder.itemView.setOnClickListener {
                 itemListener.onMonsterItemClick(monster)
             }
         }
