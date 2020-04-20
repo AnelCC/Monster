@@ -1,10 +1,15 @@
 package com.anelcc.monster.data
 
+import android.Manifest
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.Application
 import android.content.Context
+import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.ConnectivityManager
 import android.util.Log
 import androidx.annotation.WorkerThread
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import com.anelcc.monster.LOG_TAG
 import com.anelcc.monster.WEB_SERVICE_URL
@@ -61,12 +66,15 @@ class MonsterRepository(val app: Application) {
             callWebService()
         }
     }
+
     private fun saveDataToCache(monsterData: List<Monster>) {
-        val moshi = Moshi.Builder().build()
-        val listType = Types.newParameterizedType(List::class.java, Monster::class.java)
-        val adapter: JsonAdapter<List<Monster>> = moshi.adapter(listType)
-        val json = adapter.toJson(monsterData)
-        FileHelper.saveTextToFile(app, json)
+        if (ContextCompat.checkSelfPermission(app, WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
+            val moshi = Moshi.Builder().build()
+            val listType = Types.newParameterizedType(List::class.java, Monster::class.java)
+            val adapter: JsonAdapter<List<Monster>> = moshi.adapter(listType)
+            val json = adapter.toJson(monsterData)
+            FileHelper.saveTextToFile(app, json)
+        }
     }
 
     private fun readDataFromCache(): List<Monster> {
