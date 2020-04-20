@@ -24,11 +24,18 @@ class MonsterRepository(val app: Application) {
     val monsterData = MutableLiveData<List<Monster>>()
 
     init {
-        refreshData()
+        val data = readDataFromCache()
+        if (data.isEmpty()) {
+            refreshDataFromWeb()
+        } else {
+            monsterData.value = data
+            Log.i(LOG_TAG, "Using local data")
+        }
     }
 
     @WorkerThread
     suspend fun callWebService() {
+        Log.i(LOG_TAG, "networkAvailable")
         if (networkAvailable()) {
             Log.i(LOG_TAG, "Calling web service")
             val retrofit = Retrofit.Builder()
@@ -49,7 +56,7 @@ class MonsterRepository(val app: Application) {
         return networkInfo?.isConnectedOrConnecting ?: false
     }
 
-    fun refreshData() {
+    fun refreshDataFromWeb() {
         CoroutineScope(Dispatchers.IO).launch {
             callWebService()
         }
@@ -60,5 +67,16 @@ class MonsterRepository(val app: Application) {
         val adapter: JsonAdapter<List<Monster>> = moshi.adapter(listType)
         val json = adapter.toJson(monsterData)
         FileHelper.saveTextToFile(app, json)
+    }
+
+    private fun readDataFromCache(): List<Monster> {
+        val json = FileHelper.readTextFile(app)
+        if (json == null) {
+            return emptyList()
+        }
+        val moshi = Moshi.Builder().build()
+        val listType = Types.newParameterizedType(List::class.java, Monster::class.java)
+        val adapter: JsonAdapter<List<Monster>> = moshi.adapter(listType)
+        return adapter.fromJson(json) ?: emptyList()
     }
 }
