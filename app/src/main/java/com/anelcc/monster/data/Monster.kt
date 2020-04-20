@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.JsonClass
 
 @Entity(tableName = "monsters")
+@JsonClass(generateAdapter = true)
 data class Monster (
     @PrimaryKey(autoGenerate = true)
     val monsterId: Int,
