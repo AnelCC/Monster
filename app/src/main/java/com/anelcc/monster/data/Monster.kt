@@ -2,7 +2,9 @@ package com.anelcc.monster.data
 
 import com.anelcc.monster.IMAGE_BASE_URL
 import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class Monster (
     @SerializedName("monsterName")
     val name: String,
