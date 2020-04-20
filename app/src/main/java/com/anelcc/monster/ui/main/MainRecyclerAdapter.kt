@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anelcc.monster.R
 import com.anelcc.monster.data.Monster
+import com.anelcc.monster.utilities.PreferencesHelper
 import com.bumptech.glide.Glide
 
 class MainRecyclerAdapter(
@@ -21,7 +22,13 @@ class MainRecyclerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.monster_grid_item, parent, false)
+        val layoutStyle = PreferencesHelper.getItemType(parent.context)
+        val layoutId = if (layoutStyle == "grid") {
+            R.layout.monster_grid_item
+        } else {
+            R.layout.monster_list_item
+        }
+        val view = inflater.inflate(layoutId, parent, false)
         return ViewHolder(view)
     }
 
