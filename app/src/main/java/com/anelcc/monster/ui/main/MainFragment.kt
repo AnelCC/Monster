@@ -29,10 +29,6 @@ class MainFragment : Fragment(), MainRecyclerAdapter.MonsterItemListener {
     private lateinit var navController: NavController
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        (requireActivity() as AppCompatActivity).run {
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
-
         val view = inflater.inflate(R.layout.fragment_main, container, false)
         recyclerView = view.findViewById(R.id.recyclerView)
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host)
