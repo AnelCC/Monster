@@ -1,6 +1,8 @@
 package com.anelcc.monster.utilities
 
+import android.app.Application
 import android.content.Context
+import java.io.File
 
 class FileHelper {
     //In java you create Static methods in Kotlin you function member of the companions
@@ -20,6 +22,16 @@ class FileHelper {
                     it.readText()
                 }
             }
+        }
+
+        fun saveTextToFile(app: Application, json: String?) {
+            val file = File(app.getExternalFilesDir("monsters"), "monsters.json")
+            file.writeText(json ?: "", Charsets.UTF_8)
+        }
+
+        fun readTextFile(app: Application): String? {
+            val file = File(app.getExternalFilesDir("monsters"), "monsters.json")
+            return if (file.exists()) {file.readText()} else null
         }
     }
 }
