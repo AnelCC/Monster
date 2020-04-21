@@ -53,8 +53,7 @@ class MainFragment : Fragment(), MainRecyclerAdapter.MonsterItemListener {
         }
 
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        viewModel.monsterData.observe(this, Observer
-        {
+        viewModel.monsterData.observe(this, Observer {
             adapter = MainRecyclerAdapter(requireContext(), it, this)
             recyclerView.adapter = adapter
             swipeLayout.isRefreshing = false
@@ -73,22 +72,23 @@ class MainFragment : Fragment(), MainRecyclerAdapter.MonsterItemListener {
         when (item.itemId) {
             R.id.action_view_grid -> {
                 PreferencesHelper.setItemType(requireContext(), "grid")
-                recyclerView.layoutManager =
-                    GridLayoutManager(requireContext(), 2)
+                recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
                 recyclerView.adapter = adapter
             }
             R.id.action_view_list -> {
                 PreferencesHelper.setItemType(requireContext(), "list")
-                recyclerView.layoutManager =
-                    LinearLayoutManager(requireContext())
+                recyclerView.layoutManager = LinearLayoutManager(requireContext())
                 recyclerView.adapter = adapter
+            }
+            R.id.action_settings -> {
+                navController.navigate(R.id.settingsActivity)
             }
         }
         return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.options_main, menu)
+        inflater.inflate(R.menu.options_main, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 }

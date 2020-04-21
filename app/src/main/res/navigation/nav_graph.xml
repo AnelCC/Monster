@@ -28,4 +28,8 @@
             android:id="@+id/action_splashFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
+    <activity
+        android:id="@+id/settingsActivity"
+        android:name="com.anelcc.monster.SettingsActivity"
+        android:label="SettingsActivity" />
 </navigation>
