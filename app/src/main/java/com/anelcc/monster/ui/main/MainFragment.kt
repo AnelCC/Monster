@@ -59,6 +59,10 @@ class MainFragment : Fragment(), MainRecyclerAdapter.MonsterItemListener {
             swipeLayout.isRefreshing = false
         })
 
+        viewModel.activityTitle.observe(this, Observer {
+            requireActivity().title = it
+        })
+
         return view
     }
 
@@ -90,5 +94,10 @@ class MainFragment : Fragment(), MainRecyclerAdapter.MonsterItemListener {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.options_main, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateActivityTitle()
     }
 }
