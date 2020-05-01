@@ -56,10 +56,19 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-moshi:2.6.0'
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
 
+    //Moshi help to read a json similar Gson dependency
     implementation 'com.squareup.moshi:moshi-kotlin:1.9.2'
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.9.2'
 
     // Glide v4 uses this new annotation processor
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    // Room provides an abstraction layer over SQLite to allow fluent database access while harnessing the full power of SQLite.
+    def room_version = "2.2.5"
+    implementation "androidx.room:room-runtime:$room_version"
+    //Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+    // For Kotlin use kapt instead of annotationProcessor
+    kapt "androidx.room:room-compiler:$room_version"
 }
