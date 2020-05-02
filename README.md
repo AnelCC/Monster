@@ -68,4 +68,3 @@ com.anelcc.monster      # Root Package
 0. Coroutines [Read here](https://developer.android.com/topic/libraries/architecture/coroutines)
 0. Support for Room [Read here](https://developer.android.com/training/data-storage/room)
 
-This is a project I created from this course [here](https://www.linkedin.com/learning/android-development-essential-training-manage-data-with-kotlin/mobile-apps-for-a-data-driven-world-2)
